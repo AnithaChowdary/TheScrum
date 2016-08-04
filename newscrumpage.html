@@ -1,0 +1,201 @@
+.<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TASK BOARD</title>
+ <link rel="icon" href="https://pbs.twimg.com/profile_images/378800000369897277/d63dcdb31d842e971d0a1736cd981845_bigger.png" type="image/x-icon">
+<meta charset="utf-8">
+        
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="libs/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="libs/font-awesome/css/font-awesome.min.css">
+  <script src="libs/jquery.min.js"></script>
+  <script src="libs/bootstrap.min.js"></script>
+
+
+<style>
+
+.boards {
+  height: 75vh;
+}
+.boards input , .form-group{
+  margin-top: auto;
+  width:90%;
+  margin-left: 15px;
+}
+
+.posts {
+  clear: both;
+  list-style: none;
+  padding-left: 0;
+  width: 100%; 
+}
+
+
+.posts li {
+  background-color: #fff;
+  border: 1px solid #d8d8d8;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  word-wrap: break-word;
+  min-height: 42px;
+  position: right;  
+  background: transparent url(http://vignette4.wikia.nocookie.net/deadfrontier/images/9/91/Settings.png/revision/latest?cb=20100116131151;) no-repeat right;
+}
+
+.droptarget {
+  float: both;
+  /*padding-top: 20px;*/
+  padding-left: 20px;
+  padding-right: 20px;
+  /*padding-bottom: 20px;*/
+  margin-top: 10px;
+  min-height: 42px;
+}
+
+
+</style>
+
+<script type="text/javascript">
+  
+  var main = function() {
+$('#add-btn').click(function() {
+    var post = $('.status-box').val();
+   $('<li ondragstart="dragStart(event)" draggable="true" id="dragtarget"  border= "1px solid #d8d8d8" background= "transparent url(http://vignette4.wikia.nocookie.net/deadfrontier/images/9/91/Settings.png/revision/latest?cb=20100116131151;) no-repeat right" >').text(post).appendTo('.posts');
+    $('.status-box').val('');
+  });
+}
+$(document).ready(main);
+
+</script>
+</head>
+
+
+<body style="background-color:#565245">
+  <div class="container-fluid">
+  <button class="btn btn-primary" id="remove-all">Remove all</button>
+  <a class="btn btn-primary" id="remove-selected">Remove Selected</a> 
+  <button class="btn btn-primary">New Project</button>
+
+
+   <script type="text/javascript">
+     $(document).ready(function(){
+$("#remove-all").click(function(){
+$(".posts").html("");
+});
+});
+</script>
+
+<script type="text/javascript">
+var main = function() {
+  $(".posts li").click(function() {
+  $(this).toggleClass("selected"); });
+   $("#remove-selected").click(function() {
+    $(".selected").remove();
+     });
+      }; 
+      $(document).ready(main); 
+   </script>
+
+    <br>
+    <br>
+    <div class="col-md-16">
+         
+
+      <div class="col-md-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><center>LIST OF CONTENTS</center></div>
+          
+          <div class="panel-body boards" style="height:61vh">
+        <div class="droptarget" ondrop="drop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondragover="allowDrop(event)">
+           <ul class="posts">
+          
+              </ul>
+             </div>
+               </div>  
+             
+             <div class="form-group" style="display:block">
+             <textarea class="form-control status-box" rows="1" placeholder="enter the content"> </textarea>
+             <br>
+              <button class="btn btn-primary" id="add-btn">Add</button>
+             </div>
+             
+
+            </div>
+           </div>
+          
+
+      <div class="col-md-3 boards">
+        <div class="panel panel-primary">
+           <div class="panel-heading"><center>TO-DO</center></div>
+           <div class="panel-body boards">
+        <div class="droptarget" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <ul class="list-group" >
+                
+                </ul>
+           </div>
+          </div>
+        </div>
+     </div>
+
+
+      <div class="col-md-3 boards">
+        <div class="panel panel-primary">
+           <div class="panel-heading"><center>DOING</center></div>
+           <div class="panel-body boards">
+        <div class="droptarget" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <ul class="list-group">
+                </ul>
+           </div>
+           </div>
+        </div>
+     </div>
+     
+      <div class="col-md-3 boards">
+        <div class="panel panel-primary">
+           <div class="panel-heading"><center>DONE</center></div>
+           <div class="panel-body boards">
+           <div class="droptarget" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <ul class="list-group">
+                
+                </ul>
+           </div>
+           </div>
+       </div>
+     </div>
+  
+  </div>
+
+<script>
+function dragStart(event) {
+event.dataTransfer.setData("Text", event.target.id);
+}
+
+function dragEnter(event) {
+if ( event.target.className == "droptarget" ) {
+event.target.style.border = "none";
+}
+}
+
+function dragLeave(event) {
+if ( event.target.className == "droptarget" ) {
+event.target.style.border = "none";
+}
+}
+
+function allowDrop(event) {
+event.preventDefault();
+}
+
+function drop(event) {
+event.preventDefault();
+var data = event.dataTransfer.getData("Text");
+console.log(data);
+event.target.appendChild(document.getElementById(data));
+}
+</script>
+
+</body>
+</html>
